@@ -54,13 +54,16 @@ jobs:
         #   LLVM_DIR: '${{ steps.install.outputs.directory }}'
         run: |
           $llvmDir = "${{ steps.install.directory }}"
-          if (!Test-Path $llvmDir -PathType Container) {
+          $baseExists = Test-Path $llvmDir -PathType Container
+          if (!$baseExists) {
             throw "$llvmDir was not found"
           }
-          if (!Test-Path "$llvmDir\bin" -PathType Container) {
+          $binExists = Test-Path "$llvmDir\bin" -PathType Container
+          if (!$binExists) {
             throw "$llvmDir\bin was not found"
           }
-          if (!Test-Path "$llvmDir\bin\llvm-config.exe" -PathType Leaf) {
+          $exeExists = Test-Path "$llvmDir\bin\llvm-config.exe" -PathType Leaf
+          if (!$exeExists) {
             throw "$llvmDir\bin\llvm-config.exe was not found"
           }
           & '$llvmDir\bin\llvm-config.exe' --version
