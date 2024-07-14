@@ -26,7 +26,7 @@ class Installer {
             this.extension = "exe";
         } else {
             this.prefix = "clang+llvm"
-            this.arch = platform.arch.includes("arm") ? "aarch64" : ret.arch;
+            this.arch = platform.arch.includes("arm") ? "aarch64" : "x86_64";
             if (platform.isMacOS) {
                 this.suffix = "apple-darwin";
             } else if (platform.isLinux) {
