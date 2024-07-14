@@ -27,7 +27,6 @@ jobs:
         uses: ./
         with:
           version: "${{ matrix.version }}"
-          env: true
       - name: Test install *nix
         if: matrix.os != 'windows-latest'
         shell: bash

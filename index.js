@@ -1,6 +1,8 @@
-import { platform, setOutput, setFailed, addPath } from '@actions/core'
+import * as core from '@actions/core'
 import * as tc from "@actions/tool-cache";
 import * as path from "node:path";
+
+let { platform, setOutput, setFailed, addPath } = core;
 
 const CACHE_KEY = "llvm-dev-libs";
 
