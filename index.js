@@ -16,10 +16,9 @@ const platform = Object.freeze({
 
 
 
-let get_dest = () => platform.isWindows ? "\\LLVM" : "/usr/share/llvm";
+let get_dest = () => platform.isWindows ? "\\LLVM" : "/usr/local/llvm";
 let untar = async (path, dest) => {
     let exit = await exec("tar", ["xf", path, "-C", dest, ]);
-    // exit = await exec.exec("tar", ["xf", archive, "-C", directory, "--strip-components=1"]);
     if (exit !== 0) {
         throw new Error(`Failed to untar '${path}' into '${dest}'`);
     }
