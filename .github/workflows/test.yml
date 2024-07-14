@@ -53,7 +53,7 @@ jobs:
         # env:
         #   LLVM_DIR: '${{ steps.install.outputs.directory }}'
         run: |
-          $llvmDir = "${{ steps.install.directory }}"
+          $llvmDir = "${{ steps.install.outputs.directory }}"
           $baseExists = Test-Path $llvmDir -PathType Container
           if (!$baseExists) {
             throw "$llvmDir was not found"
