@@ -42,12 +42,12 @@ class Installer {
     get_url() {
         console.trace(`Installer.get_url()`);
         let rel = `v${this.version}`;
-        let file = `${self.prefix}-${this.version}-`;
+        let file = `${this.prefix}-${this.version}-`;
         if (!!this.arch) {
             file += `${this.arch}-`
         }
         file += `${this.suffix}.${this.extension}`;
-        return `${self.base_url}/${rel}/${file}`
+        return `${this.base_url}/${rel}/${file}`
     }
 
     /**
