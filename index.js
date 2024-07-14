@@ -61,26 +61,24 @@ class Installer {
 }
 
 (async () => {
+    console.log("Installing llvm libs");
     let installer = new Installer();
     // Lookup the libs from the cache
     let archive_path = tc.find(CACHE_KEY, installer.version);
     if (!!archive_path && archive_path.length > 0) {
+        console.log("llvm libs were not found in the cache, downloading");
         // If not in the cache, download the archive
         let url = installer.get_url();
-        let resp = await tc.downloadTool(url)
-        if (!resp.ok) {
-            let text = await resp.text();
-            throw new Error("Error fetching llvm release:\n" +
-                `${resp.status} ${resp.statusText} ${url}\n` +
-                text
-            );
-        }
         archive_path = await tc.downloadTool(url);
     }
+    console.log("caching archive");
     // Cache the archive to save space in the cache
     tc.cacheFile(archive_path, path.basename(archive_path), CACHE_KEY, installer.version);
+    console.log("decompressing archive");
     let saved_location = installer.decompress(archive_path);
+    console.log("decompressed into", saved_location);
     let bin_dir = path.join(saved_location, "bin");
+    console.log("adding bin_dir to PATH", bin_dir);
     addPath(bin_dir);
     return saved_location
 })().then(install_path => {
