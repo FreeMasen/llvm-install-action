@@ -2,6 +2,7 @@ import { setOutput, setFailed, addPath } from "@actions/core";
 import * as core from '@actions/core'
 import * as tc from "@actions/tool-cache";
 import * as path from "node:path";
+import {exec} from "@actions/exec";
 
 
 const CACHE_KEY = "llvm-dev-libs";
@@ -13,7 +14,25 @@ const platform = Object.freeze({
 });
 
 
+
 let get_dest = () => platform.isWindows ? "\\LLVM" : "/usr/share/llvm";
+let untar = async (path, dest) => {
+    let exit = await exec("tar", ["xf", path, "-C", dest, ]);
+    // exit = await exec.exec("tar", ["xf", archive, "-C", directory, "--strip-components=1"]);
+    if (exit !== 0) {
+        throw new Error(`Failed to untar '${path}' into '${dest}'`);
+    }
+    return dest
+}
+let unseven = async (path, dest) => {
+    let exit = exit = await exec.exec("7z", ["x", path, `-o${dest}`, "-y"]);
+    exec("ls", ["."]);
+    exec("ls", [dest]);
+    if (exit !== 0) {
+        throw new Error(`Failed to untar '${path}' into '${dest}'`);
+    }
+    return dest
+}
 
 class Installer {
     constructor() {
@@ -60,7 +79,7 @@ class Installer {
      */
     async decompress(path) {
         console.trace(`Installer.decompress("${path}")`);
-        let decomp = platform.isWindows ? tc.extract7z : tc.extractTar;
+        let decomp = platform.isWindows ? unseven : untar;
         let ret = await decomp(path, get_dest())
         console.trace("decompress->", url);
         return ret
