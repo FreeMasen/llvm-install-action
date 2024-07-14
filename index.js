@@ -2,7 +2,7 @@ import { setOutput, setFailed, addPath } from "@actions/core";
 import * as core from '@actions/core'
 import * as tc from "@actions/tool-cache";
 import * as path from "node:path";
-import {exec} from "@actions/exec";
+import {exec, getExecOutput} from "@actions/exec";
 
 
 const CACHE_KEY = "llvm-dev-libs";
@@ -60,7 +60,7 @@ class Installer {
      * @returns string
      */
     get_url() {
-        console.trace(`Installer.get_url()`);
+        console.log(`Installer.get_url()`);
         let rel = `v${this.version}`;
         let file = `${this.prefix}-${this.version}-`;
         if (!!this.arch) {
@@ -68,7 +68,7 @@ class Installer {
         }
         file += `${this.suffix}.${this.extension}`;
         let url = `${this.base_url}/${rel}/${file}`;
-        console.trace("get_url->", url);
+        console.log("get_url->", url);
         return url;
     }
 
@@ -78,10 +78,10 @@ class Installer {
      * @returns string The path llvm was decompressed to
      */
     async decompress(path) {
-        console.trace(`Installer.decompress("${path}")`);
+        console.log(`Installer.decompress("${path}")`);
         let decomp = platform.isWindows ? unseven : untar;
         let ret = await decomp(path, get_dest())
-        console.trace("decompress->", url);
+        console.log("decompress->", url);
         return ret
     }
 }
@@ -98,6 +98,10 @@ class Installer {
         archive_path = await tc.downloadTool(url);
     }
     console.log("caching archive", archive_path);
+    let out = await getExecOutput("ls", [archive_path]);
+    console.log("status:", out.exitCode);
+    console.log("stdout", out.stdout);
+    console.log("stderr", out.error);
     // Cache the archive to save space in the cache
     tc.cacheFile(archive_path, path.basename(archive_path), CACHE_KEY, installer.version);
     console.log("decompressing archive");
