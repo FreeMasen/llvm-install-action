@@ -1,10 +1,17 @@
+import { setOutput, setFailed, addPath } from "@actions/core";
 import * as core from '@actions/core'
 import * as tc from "@actions/tool-cache";
 import * as path from "node:path";
 
-let { platform, setOutput, setFailed, addPath } = core;
 
 const CACHE_KEY = "llvm-dev-libs";
+const platform = Object.freeze({
+    isWindows: process.platform.startsWith("win"),
+    isMacOS: process.platform === "darwin",
+    isLinux: process.platform === "linux",
+    arch: process.arch,
+});
+
 
 let get_dest = () => platform.isWindows ? "\\LLVM" : "/usr/share/llvm";
 
