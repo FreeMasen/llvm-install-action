@@ -25,7 +25,7 @@ let untar = async (path, dest) => {
     return dest
 }
 let unseven = async (path, dest) => {
-    let exit = exit = await exec.exec("7z", ["x", path, `-o${dest}`, "-y"]);
+    let exit = exit = await exec("7z", ["x", path, `-o${dest}`, "-y"]);
     if (exit !== 0) {
         throw new Error(`Failed to untar '${path}' into '${dest}'`);
     }
