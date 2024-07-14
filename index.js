@@ -40,6 +40,7 @@ class Installer {
      * @returns string
      */
     get_url() {
+        console.trace(`Installer.get_url()`);
         let rel = `v${this.version}`;
         let file = `${self.prefix}-${this.version}-`;
         if (!!this.arch) {
@@ -55,6 +56,7 @@ class Installer {
      * @returns string The path llvm was decompressed to
      */
     async decompress(path) {
+        console.trace(`Installer.decompress("${path}")`);
         let decomp = platform.isWindows ? tc.extract7z : tc.extractTar;
         return await decomp(path, get_dest())
     }
@@ -71,7 +73,7 @@ class Installer {
         let url = installer.get_url();
         archive_path = await tc.downloadTool(url);
     }
-    console.log("caching archive");
+    console.log("caching archive", archive_path);
     // Cache the archive to save space in the cache
     tc.cacheFile(archive_path, path.basename(archive_path), CACHE_KEY, installer.version);
     console.log("decompressing archive");
