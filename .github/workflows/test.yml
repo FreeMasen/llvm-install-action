@@ -31,6 +31,7 @@ jobs:
         if: matrix.os != 'windows-latest'
         shell: bash
         run: |
+          LLVM_DIR="${{ steps.install.directory }}"
           if [ ! -d "$LLVM_DIR" ]; then
               echo "llvm dir \"$LLVM_DIR\" does not exists"
               exit 1
