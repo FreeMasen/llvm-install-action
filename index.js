@@ -16,7 +16,7 @@ const platform = Object.freeze({
 
 
 
-let get_dest = () => platform.isWindows ? "\\LLVM" : "/usr/local/llvm";
+let get_dest = () => path.join(process.cwd(), ".llvm");
 let untar = async (path, dest) => {
     let exit = await exec("tar", ["xf", path, "-C", dest, ]);
     if (exit !== 0) {
