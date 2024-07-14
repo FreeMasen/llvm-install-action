@@ -47,7 +47,9 @@ class Installer {
             file += `${this.arch}-`
         }
         file += `${this.suffix}.${this.extension}`;
-        return `${this.base_url}/${rel}/${file}`
+        let url = `${this.base_url}/${rel}/${file}`;
+        console.trace("get_url->", url);
+        return url;
     }
 
     /**
@@ -58,7 +60,9 @@ class Installer {
     async decompress(path) {
         console.trace(`Installer.decompress("${path}")`);
         let decomp = platform.isWindows ? tc.extract7z : tc.extractTar;
-        return await decomp(path, get_dest())
+        let ret = await decomp(path, get_dest())
+        console.trace("decompress->", url);
+        return ret
     }
 }
 
