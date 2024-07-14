@@ -67,7 +67,7 @@ class Installer {
     let installer = new Installer();
     // Lookup the libs from the cache
     let archive_path = tc.find(CACHE_KEY, installer.version);
-    if (!!archive_path && archive_path.length > 0) {
+    if (!!archive_path && archive_path.length <= 0) {
         console.log("llvm libs were not found in the cache, downloading");
         // If not in the cache, download the archive
         let url = installer.get_url();
