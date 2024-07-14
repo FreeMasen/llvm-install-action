@@ -27,8 +27,6 @@ let untar = async (path, dest) => {
 }
 let unseven = async (path, dest) => {
     let exit = exit = await exec.exec("7z", ["x", path, `-o${dest}`, "-y"]);
-    exec("ls", ["."]);
-    exec("ls", [dest]);
     if (exit !== 0) {
         throw new Error(`Failed to untar '${path}' into '${dest}'`);
     }
@@ -85,7 +83,6 @@ class Installer {
         await mkdirP(dest);
         let ret = await decomp(path, dest);
         console.log("decompress->", ret);
-        exec("ls", ret);
         return ret
     }
 }
@@ -113,6 +110,7 @@ class Installer {
     addPath(bin_dir);
     return saved_location
 })().then(install_path => {
+    console.log("Successfully installed llvm libs to", install_path);
     setOutput("directory", install_path);
 }).catch(error => {
     setFailed(error.message);
