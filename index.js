@@ -27,6 +27,7 @@ class Installer {
         } else {
             this.prefix = "clang+llvm"
             this.arch = platform.arch.includes("arm") ? "aarch64" : "x86_64";
+            this.extension = "tar.xz";
             if (platform.isMacOS) {
                 this.suffix = "apple-darwin";
             } else if (platform.isLinux) {
