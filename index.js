@@ -84,7 +84,7 @@ class Installer {
         let dest = get_dest();
         await mkdirP(dest);
         let ret = await decomp(path, dest);
-        console.log("decompress->", url);
+        console.log("decompress->", ret);
         return ret
     }
 }
