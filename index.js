@@ -64,7 +64,7 @@ class Installer {
     let installer = new Installer();
     // Lookup the libs from the cache
     let archive_path = tc.find(CACHE_KEY, installer.version);
-    if (!!cached && cached.length > 0) {
+    if (!!archive_path && archive_path.length > 0) {
         // If not in the cache, download the archive
         let url = installer.get_url();
         let resp = await tc.downloadTool(url)
