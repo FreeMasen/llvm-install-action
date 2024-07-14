@@ -31,22 +31,21 @@ jobs:
         if: matrix.os != 'windows-latest'
         shell: bash
         run: |
-          LLVM_DIR="${{ steps.install.directory }}"
-          if [! -d "$LLVM_DIR"]; then
+          if [ ! -d "$LLVM_DIR" ]; then
               echo "llvm dir \"$LLVM_DIR\" does not exists"
               exit 1
           fi
-          if [! -d "$LLVM_DIR/bin"]; then
+          if [ ! -d "$LLVM_DIR/bin" ]; then
               echo "llvm dir \"$LLVM_DIR/bin\" does not exists"
               exit 1
           fi
-          if [! -f "$LLVM_DIR/bin/llvm-config"]; then
+          if [ ! -f "$LLVM_DIR/bin/llvm-config" ]; then
               echo "llvm dir \"$LLVM_DIR/bin/llvm-config\" does not exists"
               exit 1
           fi
-          "$LLVM_DIR/bin/llvm-config" --version && llvm-config --version
+          "$LLVM_DIR/bin/llvm-config" --version > /dev/null && llvm-config --version /dev/null
 
-      - name: Test install *nix
+      - name: Test install Windows
         if: matrix.os == 'windows-latest'
         shell: powershell
         run: |
