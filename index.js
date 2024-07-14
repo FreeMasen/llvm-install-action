@@ -75,7 +75,7 @@ class Installer {
     // Cache the archive to save space in the cache
     tc.cacheFile(archive_path, path.basename(archive_path), CACHE_KEY, installer.version);
     console.log("decompressing archive");
-    let saved_location = installer.decompress(archive_path);
+    let saved_location = await installer.decompress(archive_path);
     console.log("decompressed into", saved_location);
     let bin_dir = path.join(saved_location, "bin");
     console.log("adding bin_dir to PATH", bin_dir);
