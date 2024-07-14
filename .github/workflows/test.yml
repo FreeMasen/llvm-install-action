@@ -30,7 +30,7 @@ jobs:
       - name: Test install *nix
         if: matrix.os != 'windows-latest'
         shell: bash
-        run: >
+        run: |
           LLVM_DIR="${{ steps.install.directory }}"
           if [! -d "$LLVM_DIR"]; then
               echo "llvm dir \"$LLVM_DIR\" does not exists"
@@ -49,7 +49,7 @@ jobs:
       - name: Test install *nix
         if: matrix.os == 'windows-latest'
         shell: powershell
-        run: >-
+        run: |
           $llvmDir = "${{ steps.install.directory }}"
           if (!Test-Path $llvmDir -PathType Container) {
             throw "$llvmDir was not found"
